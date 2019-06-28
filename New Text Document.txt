@@ -1,0 +1,145 @@
+public class Sorting {
+	
+	public void bubblesort(int[] arr)
+	{
+		int n=arr.length;
+		while(true)
+		{
+			boolean swapped=false;
+			for(int i=0;i<n-1;i++)
+			{
+				if(arr[i]>arr[i+1])
+				{
+					swap(arr,i,i+1);
+					swapped=true;
+				}
+			}
+			
+			if(!swapped)
+			{
+				break;
+			}
+		}
+	}
+	
+	public void selectionsort(int[] arr)
+	{
+		int n=arr.length;
+		int min;
+		for(int i=0;i<n-1;i++)
+		{
+			min=i;
+			for(int j=i+1;j<n;j++)
+			{
+				if(arr[j]<arr[min])
+				{
+					min=j;
+				}
+			}
+			swap(arr,i,min);
+		}
+		
+	}
+	
+	public void insertionsort(int[] arr)
+	{
+		int n=arr.length;
+		for(int i=1;i<n;i++)
+		{
+			for(int j=i;j>0 && arr[j]<arr[j-1];j--)
+			{
+				swap(arr,j,j-1);
+			}
+		}
+		
+	}
+	
+	public void sort(int[] arr)
+	{
+		int[] aux=new int[arr.length];
+		int n=arr.length-1;
+		sort(arr,aux,0,n);
+	}
+	
+	public void sort(int[] arr,int[] aux,int lo,int hi)
+	{
+		if(hi<=lo)
+			return;
+		int mid=(lo+hi)/2;
+		sort(arr,aux,lo,mid);
+		sort(arr,aux,mid+1,hi);
+		mergesort(arr,aux,lo,mid,hi);
+	}
+	
+	public void mergesort(int[] arr,int[] aux,int lo,int mid,int hi)
+	{
+		for(int i=lo;i<=hi;i++)
+		{
+			aux[i]=arr[i];
+		}
+		
+		int i=lo;
+		int j=mid+1;
+		int k=lo;
+		while(i<=mid&&j<=hi)
+		{
+			if(aux[i]<aux[j])
+			{
+				arr[k]=aux[i];
+				i++;
+			}
+			else
+			{
+				arr[k]=aux[j];
+				j++;
+			}
+			k++;
+		}
+		
+	/*	while(i<=mid)
+		{
+			arr[k]=aux[i];
+			i++;
+			k++;
+		}
+		*/
+		
+	}
+	public void swap(int[] arr,int i,int j)
+	{
+		int temp;
+		temp=arr[i];
+		arr[i]=arr[j];
+		arr[j]=temp;
+	}
+	
+	public void print(int[] arr)
+	{
+		int n=arr.length;
+		System.out.print("{");
+		for(int i=0;i<n;i++)
+		{
+			if(i<n-1)
+			{
+			System.out.print(arr[i]+",");
+			}
+			else
+			{
+				System.out.print(arr[i]);
+			}
+		}
+		System.out.print("}");
+	}
+
+	public static void main(String[] args) {
+		
+		Sorting sorting=new Sorting();
+		System.out.println("");
+		int[] a= {10,9,45,3,7,6,1,15};
+		sorting.print(a);
+		System.out.println("\nAfter sorting");
+		sorting.sort(a);
+		sorting.print(a);
+	}
+
+}
